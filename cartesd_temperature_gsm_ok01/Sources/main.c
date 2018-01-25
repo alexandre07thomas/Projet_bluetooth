@@ -161,6 +161,7 @@ for(;;) {
 		uart1_SendStr("t1= ");
 		uart1_SendNum(t1);
 		uart1_CRLF();
+		//test
 	  // log it to the file on the SD card
 	  Ecrire_Temperature(Temp1, Temp2);
 
