@@ -36,7 +36,7 @@
 
 void Envoie_Alerte(char num[14])//Mettre en parametre le numero de telephone
 {
-	uart1_SendChar('A');
+	/* uart1_SendChar('A');
 	uart1_CRLF();
 	uart1_SendStr("AT");
 	uart1_CRLF();
@@ -54,6 +54,6 @@ void Envoie_Alerte(char num[14])//Mettre en parametre le numero de telephone
 
 	uart1_SendStr("ATTENTION ! Le système a détecté un feu de cheminée.");
 	uart1_SendChar(0x1A);
-	uart1_CRLF();
+	uart1_CRLF();*/
 }
 

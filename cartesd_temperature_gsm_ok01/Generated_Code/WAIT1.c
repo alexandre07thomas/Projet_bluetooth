@@ -5,9 +5,9 @@
 **     Processor   : MK64FN1M0VLQ12
 **     Component   : Wait
 **     Version     : Component 01.067, Driver 01.00, CPU db: 3.00.000
-**     Repository  : Legacy User Components
+**     Repository  : My Components
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2018-01-23, 11:03, # CodeGen: 6
+**     Date/Time   : 2018-01-30, 09:06, # CodeGen: 10
 **     Abstract    :
 **          Implements busy waiting routines.
 **     Settings    :
@@ -27,7 +27,7 @@
 **         WaitOSms       - void WAIT1_WaitOSms(void);
 **
 **     License   : Open Source (LGPL)
-**     Copyright : Erich Styger, 2013-2014, all rights reserved.
+**     Copyright : Erich Styger, 2013-2015, all rights reserved.
 **     Web       : www.mcuoneclipse.com
 **     This an open source software implementing waiting routines using Processor Expert.
 **     This is a free software and is opened for education,  research  and commercial developments under license policy of following terms:
@@ -63,6 +63,7 @@
 __attribute__((naked, no_instrument_function)) void WAIT1_Wait10Cycles(void)
 {
   /* This function will wait 10 CPU cycles (including call overhead). */
+  /*lint -save -e522 function lacks side effect. */
   /* NOTE: Cortex-M0 and M4 have 1 cycle for a NOP */
   /* Compiler is GNUC */
   __asm (
@@ -72,6 +73,7 @@ __attribute__((naked, no_instrument_function)) void WAIT1_Wait10Cycles(void)
    "nop   \n\t" /* [1] */
    "bx lr \n\t" /* [3] */
   );
+  /*lint -restore */
 }
 
 /*
@@ -86,6 +88,7 @@ __attribute__((naked, no_instrument_function)) void WAIT1_Wait10Cycles(void)
 __attribute__((naked, no_instrument_function)) void WAIT1_Wait100Cycles(void)
 {
   /* This function will spend 100 CPU cycles (including call overhead). */
+  /*lint -save -e522 function lacks side effect. */
   __asm (
    /* bl to here:               [4] */
    "movs r0, #0 \n\t"        /* [1] */
@@ -101,6 +104,7 @@ __attribute__((naked, no_instrument_function)) void WAIT1_Wait100Cycles(void)
    "nop         \n\t"        /* [1] */
    "bx lr       \n\t"        /* [3] */
   );
+  /*lint -restore */
 }
 
 /*
@@ -116,6 +120,7 @@ __attribute__((naked, no_instrument_function)) void WAIT1_Wait100Cycles(void)
 */
 void WAIT1_WaitCycles(uint16_t cycles)
 {
+  /*lint -save -e522 function lacks side effect. */
   while(cycles > 100) {
     WAIT1_Wait100Cycles();
     cycles -= 100;
@@ -124,6 +129,7 @@ void WAIT1_WaitCycles(uint16_t cycles)
     WAIT1_Wait10Cycles();
     cycles -= 10;
   }
+  /*lint -restore */
 }
 
 /*
@@ -139,11 +145,13 @@ void WAIT1_WaitCycles(uint16_t cycles)
 */
 void WAIT1_WaitLongCycles(uint32_t cycles)
 {
+  /*lint -save -e522 function lacks side effect. */
   while(cycles>60000) {
     WAIT1_WaitCycles(60000);
     cycles -= 60000;
   }
   WAIT1_WaitCycles((uint16_t)cycles);
+  /*lint -restore */
 }
 
 /*
@@ -160,6 +168,7 @@ void WAIT1_WaitLongCycles(uint32_t cycles)
 */
 void WAIT1_Waitms(uint16_t ms)
 {
+  /*lint -save -e522 function lacks side effect. */
   uint32_t msCycles; /* cycles for 1 ms */
 
   /* static clock/speed configuration */
@@ -168,6 +177,7 @@ void WAIT1_Waitms(uint16_t ms)
     WAIT1_WaitLongCycles(msCycles);
     ms--;
   }
+  /*lint -restore */
 }
 /*
 ** ===================================================================

@@ -5,9 +5,9 @@
 **     Processor   : MK64FN1M0VLQ12
 **     Component   : GenericTimeDate
 **     Version     : Component 01.027, Driver 01.00, CPU db: 3.00.000
-**     Repository  : Legacy User Components
+**     Repository  : My Components
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2018-01-23, 11:03, # CodeGen: 6
+**     Date/Time   : 2018-01-30, 09:06, # CodeGen: 10
 **     Abstract    :
 **         Software date/time module.
 **     Settings    :
@@ -98,7 +98,7 @@ uint8_t TmDt1_SetTime(uint8_t Hour, uint8_t Min, uint8_t Sec, uint8_t Sec100)
   time.Min = Min;
   time.Sec = Sec;
   time.Sec100 = Sec100;
-  TmDt1_TimeToTicks(&time, &nofTicks);
+  (void)TmDt1_TimeToTicks(&time, &nofTicks);
   CS1_EnterCritical();
   tickCntr = nofTicks;
   CS1_ExitCritical();
@@ -120,7 +120,7 @@ uint8_t TmDt1_SetTime(uint8_t Hour, uint8_t Min, uint8_t Sec, uint8_t Sec100)
 */
 void TmDt1_AddTick(void)
 {
-  const uint8_t* ptr;                  /* Pointer to ULY/LY table */
+  const uint8_t *ptr;                  /* Pointer to ULY/LY table */
   CS1_CriticalVariable()
 
   CS1_EnterCritical();                 /* need exclusive access to tick counter */
@@ -329,13 +329,13 @@ uint8_t TmDt1_TicksToTime(uint32_t ticks, TIMEREC *Time)
 */
 uint8_t TmDt1_TimeToTicks(TIMEREC *Time, uint32_t *ticks)
 {
-  uint32_t tickCntr;
+  uint32_t cntr;
 
-  tickCntr = (3600UL*TmDt1_TICKS_PER_S*(uint32_t)Time->Hour)
+  cntr = (3600UL*TmDt1_TICKS_PER_S*(uint32_t)Time->Hour)
               + (60UL*TmDt1_TICKS_PER_S*(uint32_t)Time->Min)
               + (TmDt1_TICKS_PER_S*(uint32_t)Time->Sec)
               + ((TmDt1_TICKS_PER_S/100)*(uint32_t)Time->Sec100); /* Load given time re-calculated to TmDt1_TICK_TIME_MS ms ticks into software tick counter */
-  *ticks = tickCntr;
+  *ticks = cntr;
   return ERR_OK;
 }
 

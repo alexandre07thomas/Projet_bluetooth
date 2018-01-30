@@ -5,9 +5,9 @@
 **     Processor   : MK64FN1M0VLQ12
 **     Component   : Wait
 **     Version     : Component 01.067, Driver 01.00, CPU db: 3.00.000
-**     Repository  : Legacy User Components
+**     Repository  : My Components
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2018-01-23, 11:03, # CodeGen: 6
+**     Date/Time   : 2018-01-30, 09:06, # CodeGen: 10
 **     Abstract    :
 **          Implements busy waiting routines.
 **     Settings    :
@@ -27,7 +27,7 @@
 **         WaitOSms       - void WAIT1_WaitOSms(void);
 **
 **     License   : Open Source (LGPL)
-**     Copyright : Erich Styger, 2013-2014, all rights reserved.
+**     Copyright : Erich Styger, 2013-2015, all rights reserved.
 **     Web       : www.mcuoneclipse.com
 **     This an open source software implementing waiting routines using Processor Expert.
 **     This is a free software and is opened for education,  research  and commercial developments under license policy of following terms:
@@ -129,11 +129,13 @@ void WAIT1_Waitms(uint16_t ms);
 
 /* we are having a static clock configuration: implement as macro/inlined version */
 #define WAIT1_Waitus(us)  \
+        /*lint -save -e(505,506,522) Constant value Boolean, Redundant left argument to comma. */\
        (  ((WAIT1_NofCyclesUs((us),WAIT1_INSTR_CLOCK_HZ)==0)||(us)==0) ? \
           (void)0 : \
           ( ((us)/1000)==0 ? (void)0 : WAIT1_Waitms((uint16_t)((us)/1000))) \
           , (WAIT1_NofCyclesUs(((us)%1000), WAIT1_INSTR_CLOCK_HZ)==0) ? (void)0 : \
             WAIT1_WAIT_C(WAIT1_NofCyclesUs(((us)%1000), WAIT1_INSTR_CLOCK_HZ)) \
+       /*lint -restore */\
        )
 /*
 ** ===================================================================
@@ -150,12 +152,14 @@ void WAIT1_Waitms(uint16_t ms);
 
 /* we are having a static clock configuration: implement as macro/inlined version */
 #define WAIT1_Waitns(ns)  \
+        /*lint -save -e(505,506,522) Constant value Boolean, Redundant left argument to comma. */\
        (  ((WAIT1_NofCyclesNs((ns), WAIT1_INSTR_CLOCK_HZ)==0)||(ns)==0) ? \
           (void)0 : \
           WAIT1_Waitus((ns)/1000) \
           , (WAIT1_NofCyclesNs((ns)%1000, WAIT1_INSTR_CLOCK_HZ)==0) ? \
               (void)0 : \
               WAIT1_WAIT_C(WAIT1_NofCyclesNs(((ns)%1000), WAIT1_INSTR_CLOCK_HZ)) \
+       /*lint -restore */\
        )
 /*
 ** ===================================================================

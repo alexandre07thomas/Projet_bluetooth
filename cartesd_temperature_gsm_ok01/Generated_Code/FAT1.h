@@ -5,9 +5,9 @@
 **     Processor   : MK64FN1M0VLQ12
 **     Component   : FAT_FileSystem
 **     Version     : Component 01.168, Driver 01.00, CPU db: 3.00.000
-**     Repository  : Legacy User Components
+**     Repository  : My Components
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2018-01-23, 11:03, # CodeGen: 6
+**     Date/Time   : 2018-01-30, 09:06, # CodeGen: 10
 **     Abstract    :
 **
 **     Settings    :
@@ -95,6 +95,10 @@
 **  @{
 */         
 
+#ifndef __FAT1_H
+#define __FAT1_H
+
+/* MODULE FAT1. */
 /* Wrappers to FatFS types and constants */
 #define FAT1_FATFS            FATFS
 #define FAT1_DIR              DIR
@@ -108,11 +112,6 @@
 #define FAT1_FS_RPATH         _FS_RPATH
 #define FAT1_FRESULT          FRESULT
 #define FAT1_DRESULT          DRESULT
-
-#ifndef __FAT1_H
-#define __FAT1_H
-
-/* MODULE FAT1. */
 
 /* Include shared modules, which are used for whole project */
 #include "PE_Types.h"

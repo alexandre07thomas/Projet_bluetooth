@@ -5,9 +5,9 @@
 **     Processor   : MK64FN1M0VLQ12
 **     Component   : GenericI2C
 **     Version     : Component 01.027, Driver 01.00, CPU db: 3.00.000
-**     Repository  : Legacy User Components
+**     Repository  : My Components
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2018-01-23, 11:03, # CodeGen: 6
+**     Date/Time   : 2018-01-30, 09:06, # CodeGen: 10
 **     Abstract    :
 **         This component implements a generic I2C driver wrapper to work both with LDD and non-LDD I2C components.
 **     Settings    :
@@ -84,6 +84,8 @@ static GI2C1_TDataState GI2C1_deviceData;
 */
 void GI2C1_RequestBus(void)
 {
+  /*lint -save -e522 function lacks side effect  */
+  /*lint -restore */
 }
 
 /*
@@ -97,6 +99,8 @@ void GI2C1_RequestBus(void)
 */
 void GI2C1_ReleaseBus(void)
 {
+  /*lint -save -e522 function lacks side effect  */
+  /*lint -restore */
 }
 
 /*
@@ -492,7 +496,9 @@ byte GI2C1_ProbeACK(void* data, word dataSize, GI2C1_EnumSendFlags flags, word W
   if (res!=ERR_OK) {
     return res;
   }
+  /*lint -save -e522 Lacks side effect */
   WAIT1_Waitus(WaitTimeUS);
+  /*lint -restore */
   if (!GI2C1_deviceData.dataTransmittedFlg) {
     return ERR_FAILED; /* no ACK received? */
   }

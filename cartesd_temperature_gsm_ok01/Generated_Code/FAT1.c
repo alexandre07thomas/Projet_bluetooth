@@ -5,9 +5,9 @@
 **     Processor   : MK64FN1M0VLQ12
 **     Component   : FAT_FileSystem
 **     Version     : Component 01.168, Driver 01.00, CPU db: 3.00.000
-**     Repository  : Legacy User Components
+**     Repository  : My Components
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2018-01-23, 11:03, # CodeGen: 6
+**     Date/Time   : 2018-01-30, 09:06, # CodeGen: 10
 **     Abstract    :
 **
 **     Settings    :
@@ -112,7 +112,7 @@ DSTATUS disk_initialize (
     default:
       break;
   } /* switch */
-  return RES_PARERR;
+  return (DSTATUS)RES_PARERR;
 }
 /*-----------------------------------------------------------------------*/
 /* Return Disk Status                                                    */
@@ -126,7 +126,7 @@ DSTATUS disk_status (
     default:
       break;
   } /* switch */
-  return RES_PARERR;
+  return (DSTATUS)RES_PARERR;
 }
 /*-----------------------------------------------------------------------*/
 /* Read Sector(s)                                                        */

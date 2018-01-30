@@ -5,9 +5,9 @@
 **     Processor   : MK64FN1M0VLQ12
 **     Component   : CriticalSection
 **     Version     : Component 01.006, Driver 01.00, CPU db: 3.00.000
-**     Repository  : Legacy User Components
+**     Repository  : My Components
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2018-01-23, 11:03, # CodeGen: 6
+**     Date/Time   : 2018-01-30, 09:06, # CodeGen: 10
 **     Abstract    :
 **
 **     Settings    :
@@ -77,12 +77,14 @@
 
 #define CS1_EnterCritical() \
   do {                                  \
+    /*lint -save  -esym(529,cpuSR) Symbol 'cpuSR' not subsequently referenced. */\
     __asm (                             \
     "mrs   r0, PRIMASK     \n\t"        \
     "cpsid i               \n\t"        \
     "strb r0, %[output]   \n\t"         \
     : [output] "=m" (cpuSR) :: "r0");   \
     __asm ("" ::: "memory");            \
+    /*lint -restore Symbol 'cpuSR' not subsequently referenced. */\
   } while(0)
 
 /*

@@ -8,7 +8,7 @@
 **     Repository  : Kinetis
 **     Datasheet   : K64P144M120SF5RM, Rev.2, January 2014
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2018-01-23, 11:03, # CodeGen: 6
+**     Date/Time   : 2018-01-30, 08:10, # CodeGen: 9
 **     Abstract    :
 **         This file collects Processor Expert components configuration 
 **         and interface files.
@@ -97,6 +97,7 @@
 **              SLEEP operation mode                       : 
 **                Return to stop after ISR                 : no
 **              STOP operation mode                        : Disabled
+**          External memory settings                       : Disabled
 **          Common settings                                : 
 **            Initialization priority                      : minimal priority
 **            Watchdog disable                             : yes

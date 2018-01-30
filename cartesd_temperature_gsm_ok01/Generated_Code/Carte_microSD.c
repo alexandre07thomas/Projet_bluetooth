@@ -5,9 +5,9 @@
 **     Processor   : MK64FN1M0VLQ12
 **     Component   : SD_Card
 **     Version     : Component 01.178, Driver 01.00, CPU db: 3.00.000
-**     Repository  : Legacy User Components
+**     Repository  : My Components
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2018-01-23, 11:03, # CodeGen: 6
+**     Date/Time   : 2018-01-30, 09:06, # CodeGen: 10
 **     Abstract    :
 **         Implements interface to SD card for FatFs
 **     Settings    :
@@ -273,11 +273,15 @@ DRESULT Carte_microSD_disk_ioctl (
     switch (*ptr) {
       case 0:                           /* Sub control code == 0 (POWER_OFF) */
         if (chk_power()) {
+        /*lint -save -e522 Highest operation lacks side effect */
           power_off();                  /* Power off */
+        /*lint -restore */
         }
         break;
       case 1:                           /* Sub control code == 1 (POWER_ON) */
+        /*lint -save -e522 Highest operation lacks side effect */
         power_on();                     /* Power on */
+        /*lint -restore */
         break;
       case 2:                           /* Sub control code == 2 (POWER_GET) */
         *(ptr+1) = (uint8_t)chk_power();
@@ -588,6 +592,7 @@ bool Carte_microSD_ReceiveDataBlock(byte *data, word nofBytes)
     Carte_microSD_Deactivate();
     return FALSE;
   }
+  /*lint -save -e539 Did not expect positive indentation  */
 #if Carte_microSD_SPI_WRITE_READ_BLOCK_ENABLED
   if (nofBytes<=SPI_WRITE_READ_BLOCK_SIZE_DUMMY) {
     Carte_microSD_SPI_WRITE_READ_BLOCK((unsigned char*)&dummyArr[0], data, nofBytes); /* write dummy value, read data */
@@ -601,6 +606,7 @@ bool Carte_microSD_ReceiveDataBlock(byte *data, word nofBytes)
 #if Carte_microSD_SPI_WRITE_READ_BLOCK_ENABLED
   }
 #endif
+  /*lint -restore Did not expect positive indentation */
   Carte_microSD_SPI_WRITE(Carte_microSD_DUMMY); /* checksum Bytes not needed */
   Carte_microSD_SPI_WRITE(Carte_microSD_DUMMY);
   Carte_microSD_Deactivate();
@@ -817,7 +823,9 @@ byte Carte_microSD_Init(void* unused)
   (void)unused;
   /* -------------------------------- Init & Slow Mode -------------------------------- */
   /* after voltage reaches 2.2V, need to wait at least 1 ms. Then we need to set Data and CS/Chipselect high for at least 74 clocks */
+  /*lint -save -e522 function lacks side-effects */
   WAIT1_Waitms(1);                      /* wait at least for 1 ms on insertion and power on */
+  /*lint -restore */
   speedMode = Carte_microSD_ACTIVATE_MODE_SLOW;
   Carte_microSD_Activate();             /* select slave */
   Carte_microSD_SetSlowMode();          /* set the SPI clock to 375 kbps. This is required for compatibility across a wide range of SD and MMC cards. */
@@ -825,7 +833,9 @@ byte Carte_microSD_Init(void* unused)
   for(cnt=0;cnt<10;cnt++) {             /* send at least 75 SPI clock cycles with the SS signal asserted to ensure that the SD card internal state machine is initialized. */
     Carte_microSD_SPI_WRITE(Carte_microSD_DUMMY);
   }
+  /*lint -save -e522 function lacks side-effects */
   WAIT1_Waitus(50);                     /* need to wait a little bin in order SPI transfer to be finished (need this on CN128, but on others too?) */
+  /*lint -restore */
   Carte_microSD_Deactivate();
   /* -------------------------------- IDLE Command -------------------------------- */
   arg = 0;

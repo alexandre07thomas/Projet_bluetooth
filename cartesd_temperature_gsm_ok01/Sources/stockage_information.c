@@ -165,13 +165,13 @@ void Ecrire_Tmax(int t1m, int t2m)
 	  PORT_PDD_SetPinPullSelect(PORTE_BASE_PTR, 6, PORT_PDD_PULL_DOWN);
 	  PORT_PDD_SetPinPullEnable(PORTE_BASE_PTR, 6, PORT_PDD_PULL_ENABLE);
 
-	  t1mchaine[0] = t1m/100 + 0x30;
+	  t1mchaine[0] = t1m/100 + 0x30;    // T1M : Int --> char en ASCII
 	  reste1 = t1m%100;
 	  t1mchaine[1]=reste1/10 + 0x30;
 	  t1mchaine[2]=reste1%10 + 0x30;
 	  t1mchaine[3]=0;
 
-	  t2mchaine[0]=t2m/100 + 0x30;
+	  t2mchaine[0]=t2m/100 + 0x30; 		// T2M : Int --> char en ASCII
 	  reste2=t2m%100;
 	  t2mchaine[1]=reste2/10 + 0x30;
 	  t2mchaine[2]=reste2%10 + 0x30;
@@ -203,6 +203,22 @@ write_buf[0] = '\0';
 	      (void)FAT1_close(&fp);
 	      Err();
 	    }
+	/*
+	 *	uart1_SendChar(t1mchaine[0]);
+		uart1_SendChar(t1mchaine[1]);
+		uart1_SendChar(t1mchaine[2]);
+		uart1_SendChar(t1mchaine[3]);
+		uart1_CRLF();
+
+
+
+		uart1_SendChar(t2mchaine[0]);
+		uart1_SendChar(t2mchaine[1]);
+		uart1_SendChar(t2mchaine[2]);
+		uart1_SendChar(t2mchaine[3]);
+		uart1_CRLF();
+		uart1_CRLF();
+*/
 	(void)FAT1_close(&fp);
 }
 void Lire_Tmax()
@@ -234,8 +250,27 @@ void Lire_Tmax()
 		      (void)FAT1_close(&fp);
 		      Err();
 		    }
+
+
+		/*
+		 * uart1_SendStr("t1m: "); // test
+		uart1_SendNum(t1m); // test
+		uart1_CRLF();
+		uart1_SendStr("t2m: "); // test
+		uart1_SendNum(t2m); // test
+		uart1_CRLF();
+		uart1_CRLF();
+		*
+		*/
+
+		for( int o = 0; o<48 ; o++ ){
+		uart1_SendChar(write_buf);
+		}
+		uart1_CRLF();
 		(void)FAT1_close(&fp);
+
 }
+
 void Lire_Tel()
 {
 	UINT bw;
