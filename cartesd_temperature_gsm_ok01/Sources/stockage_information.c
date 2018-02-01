@@ -61,7 +61,7 @@ void Ecrire_Temperature(int Temp1, int Temp2){
     extern char an;
     char temptxt[14]="./000000.txt";
 
-    temptxt[2]=jour/10 + 0x30;   //Transforme le jour en lettres ASCII
+    temptxt[2]=jour/10 + 0x30;   // remplace le nom du fichier qui stocke les °C par le jour actuel.
     temptxt[3]=jour%10 + 0x30;
 
     temptxt[4]=mois/10 + 0x30;   //Transforme le mois en lettres ASCII
@@ -71,7 +71,7 @@ void Ecrire_Temperature(int Temp1, int Temp2){
     temptxt[7]=an%10 + 0x30;
 
     /* open file */
-    if (FAT1_open(&fp, temptxt, FA_OPEN_ALWAYS|FA_WRITE)!=FR_OK) {
+    if (FAT1_open(&fp, temptxt, FA_OPEN_ALWAYS|FA_WRITE)!=FR_OK) {				//
       Err();
     }
     /* move to the end of the file */
@@ -89,8 +89,8 @@ void Ecrire_Temperature(int Temp1, int Temp2){
     /* write data */
     write_buf[0] = '\0';
 
-    UTIL1_strcatNum16u(write_buf, sizeof(write_buf), date.Year);
-    UTIL1_chcat(write_buf, sizeof(write_buf), ':');
+    UTIL1_strcatNum16u(write_buf, sizeof(write_buf), date.Year);		// Il faut prendre l'heure de l'horloge externe
+    UTIL1_chcat(write_buf, sizeof(write_buf), ':');						// Et non pas celle l'horloge interne de du uC de la FRDM
     UTIL1_strcatNum8u(write_buf, sizeof(write_buf), date.Month);
     UTIL1_chcat(write_buf, sizeof(write_buf), ':');
     UTIL1_strcatNum8u(write_buf, sizeof(write_buf), date.Day);
@@ -252,21 +252,19 @@ void Lire_Tmax()
 		    }
 
 
-		/*
-		 * uart1_SendStr("t1m: "); // test
-		uart1_SendNum(t1m); // test
-		uart1_CRLF();
-		uart1_SendStr("t2m: "); // test
-		uart1_SendNum(t2m); // test
-		uart1_CRLF();
-		uart1_CRLF();
-		*
-		*/
 
-		for( int o = 0; o<48 ; o++ ){
-		uart1_SendChar(write_buf);
+	 for( int o = 0; o<48 ; o++ )
+		{
+		uart1_SendChar(write_buf[o]);
 		}
 		uart1_CRLF();
+
+		for( int i = 0; i<48 ; i++ )
+		{
+		uart1_SendChar(chaine_stockee[i]);
+			}
+		uart1_CRLF();
+
 		(void)FAT1_close(&fp);
 
 }

@@ -7,7 +7,7 @@
 **     Version     : Component 01.016, Driver 01.07, CPU db: 3.00.000
 **     Repository  : Kinetis
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2018-01-30, 09:06, # CodeGen: 10
+**     Date/Time   : 2018-02-01, 13:43, # CodeGen: 15
 **     Abstract    :
 **          This component encapsulates the internal I2C communication
 **          interface. The implementation of the interface is based

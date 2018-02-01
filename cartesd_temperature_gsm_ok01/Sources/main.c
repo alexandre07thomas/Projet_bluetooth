@@ -131,6 +131,7 @@ int main(void)
 
 
 	init_alarme();  // sert à regler l'interruption à minuit
+
 	Ecrire_Date_Heure(jour,mois,an,23,59,30); // sert à ecrire l'heure dans le composant
 
 	TmDt1_SetDate(2017,03,05);
@@ -138,14 +139,14 @@ int main(void)
 	TmDt1_SetTime(10,05,30,0);
   /* Write your code here */
 
-//Ecrire_Tel(tel1);
+Ecrire_Tel(tel1);
 //Ecrire_Tmax(t1m,t2m);
 
-//t1=Temperature1();
-//t2=Temperature2();
+t1=Temperature1();
+t2=Temperature2();
 
 //Lire_Tmax();
-//Lire_Tel();
+Lire_Tel();
 
 alimTel_SetVal(); // Alimentation du module GSM
 
@@ -160,24 +161,12 @@ for(;;) {
 		Temp1 = t1;
 		Temp2 = t2;
 
-		uart1_SendStr("t1= ");
-		uart1_SendNum(t1);
-		uart1_SendStr("°");
-		uart1_CRLF();
 
 
 	  //Ecrire_Temperature(Temp1, Temp2);
-			Ecrire_Tmax(350,280);
-			/*
-			 * Lire_Tmax();
-			uart1_SendStr("t1m: "); // test
-			uart1_SendNum(t1m); // test
-			uart1_CRLF();
-			uart1_SendStr("t2m: "); // test
-			uart1_SendNum(t2m); // test
-			uart1_CRLF();
-			uart1_CRLF();
-			 */
+			Ecrire_Tmax(250,170);
+			Lire_Tmax();
+
 	  //si une des temperatures est superieure a son seuil
 	  if( (t1>t1m) || (t2>t2m) )
 	  {
