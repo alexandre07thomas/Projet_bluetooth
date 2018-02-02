@@ -139,7 +139,7 @@ int main(void)
 	TmDt1_SetTime(10,05,30,0);
   /* Write your code here */
 
-Ecrire_Tel(tel1);
+//Ecrire_Tel(tel1);
 //Ecrire_Tmax(t1m,t2m);
 
 t1=Temperature1();

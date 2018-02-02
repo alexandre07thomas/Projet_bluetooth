@@ -112,6 +112,9 @@ void Ecrire_Temperature(int Temp1, int Temp2){
       (void)FAT1_close(&fp);
       Err();
     }
+
+
+
     /* closing file */
     (void)FAT1_close(&fp);
   }
@@ -203,22 +206,7 @@ write_buf[0] = '\0';
 	      (void)FAT1_close(&fp);
 	      Err();
 	    }
-	/*
-	 *	uart1_SendChar(t1mchaine[0]);
-		uart1_SendChar(t1mchaine[1]);
-		uart1_SendChar(t1mchaine[2]);
-		uart1_SendChar(t1mchaine[3]);
-		uart1_CRLF();
 
-
-
-		uart1_SendChar(t2mchaine[0]);
-		uart1_SendChar(t2mchaine[1]);
-		uart1_SendChar(t2mchaine[2]);
-		uart1_SendChar(t2mchaine[3]);
-		uart1_CRLF();
-		uart1_CRLF();
-*/
 	(void)FAT1_close(&fp);
 }
 void Lire_Tmax()
@@ -253,15 +241,9 @@ void Lire_Tmax()
 
 
 
-	 for( int o = 0; o<48 ; o++ )
-		{
-		uart1_SendChar(write_buf[o]);
-		}
-		uart1_CRLF();
-
 		for( int i = 0; i<48 ; i++ )
 		{
-		uart1_SendChar(chaine_stockee[i]);
+		uart1_SendChar(write_buf[i]);
 			}
 		uart1_CRLF();
 
